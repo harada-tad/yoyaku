@@ -268,7 +268,7 @@ textarea.fc { resize:vertical; }
 /* Admin */
 .adm-section { margin-bottom:20px; }
 .adm-ttl { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--primary-lt); text-transform:uppercase; letter-spacing:.4px; }
-.adm-item { display:flex; align-items:center; gap:8px; padding:6px 4px; border-bottom:1px solid var(--border); font-size:13px; }
+.adm-item { display:flex; align-items:center; gap:8px; padding:6px 4px; border-bottom:1px solid var(--border); font-size:13px; flex-wrap:wrap; }
 .adm-item:last-child { border-bottom:none; }
 .adm-chip { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
 .adm-name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -278,6 +278,19 @@ textarea.fc { resize:vertical; }
 .adm-move { background:#f3f2f1; color:var(--muted); border:1px solid var(--border2); border-radius:3px; padding:1px 6px; cursor:pointer; font-size:13px; font-family:inherit; line-height:1.4; transition:background .1s; flex-shrink:0; }
 .adm-move:hover:not(:disabled) { background:var(--primary-lt); color:var(--primary); border-color:var(--primary); }
 .adm-move:disabled { opacity:.25; cursor:default; }
+.adm-memo-row { flex-basis:100%; display:flex; align-items:flex-start; gap:5px; padding:2px 2px 8px 30px; }
+.adm-memo-lbl { font-size:10px; color:#bbb; flex-shrink:0; padding-top:5px; }
+.adm-memo-inp { flex:1; font-size:12px; color:var(--muted); border:1px solid var(--border2); background:rgba(0,0,0,.02); outline:none; border-radius:4px; padding:4px 7px; font-family:inherit; min-width:0; resize:vertical; min-height:52px; line-height:1.5; transition:border-color .15s, box-shadow .15s; }
+.adm-memo-inp:hover { border-color:var(--border2); }
+.adm-memo-inp:focus { border-color:var(--primary); box-shadow:0 0 0 2px rgba(0,120,212,.15); color:var(--text); }
+.adm-memo-inp::placeholder { color:#c8c6c4; }
+.res-lbl-memo { font-size:10px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; line-height:1.3; }
+/* Inline resource edit */
+.adm-item.editing { background:#f0f6ff; border-left:3px solid var(--primary); padding-left:6px; }
+.adm-edit-inp { font-size:13px; font-family:inherit; border:1px solid var(--border2); border-radius:4px; padding:3px 7px; background:white; outline:none; min-width:0; }
+.adm-edit-inp:focus { border-color:var(--primary); box-shadow:0 0 0 2px rgba(0,120,212,.15); }
+.adm-edit { background:none; border:none; cursor:pointer; color:var(--muted); font-size:13px; padding:2px 5px; border-radius:3px; transition:background .1s; flex-shrink:0; }
+.adm-edit:hover { background:var(--border); color:var(--text); }
 /* Drag-and-drop */
 .adm-item[draggable] { cursor:grab; }
 .adm-item.drag-over-top    { border-top:2px solid var(--primary); }
@@ -381,6 +394,50 @@ textarea.fc { resize:vertical; }
 .cal-day.selected.has-resv::before { background: rgba(255,255,255,.8); }
 
 /* Print */
+/* ===== DARK MODE ===== */
+body.dark {
+  --bg: #201f1e;
+  --surface: #2d2c2b;
+  --border: #3b3a39;
+  --border2: #484644;
+  --text: #f3f2f1;
+  --muted: #a19f9d;
+  --primary-lt: #003a6c;
+}
+body.dark .lbl-col  { background: #252423; }
+body.dark .cat-lbl  { background: #1f1e1d; }
+body.dark .week-cat-row { background: #1f1e1d; }
+body.dark .modal    { background: #2d2c2b; }
+body.dark .modal-hdr{ background: #252423; }
+body.dark .fc       { background: #3b3a39; color: var(--text); border-color: #484644; }
+body.dark .fc:focus { background: #2d2c2b; }
+body.dark .fc::placeholder { color: #6e6c6a; }
+body.dark .add-box  { background: #252423; border-color: #3b3a39; }
+body.dark .adm-item.editing { background: #002050; }
+body.dark .adm-edit-inp { background: #3b3a39; color: var(--text); border-color: #484644; }
+body.dark .adm-edit-inp:focus { background: #2d2c2b; }
+body.dark .adm-del  { background: #5a1a1a; color: #ff9b9b; }
+body.dark .adm-del:hover { background: #7a2020; }
+body.dark .adm-move { background: #3b3a39; border-color: #484644; color: #a19f9d; }
+body.dark .adm-move:hover:not(:disabled) { background: #003a6c; color: #deecf9; border-color: var(--primary); }
+body.dark .adm-memo-inp { background: rgba(255,255,255,.05); border-color: #484644; color: var(--muted); }
+body.dark .adm-memo-inp:focus { background: #2d2c2b; color: var(--text); border-color: var(--primary); }
+body.dark .adm-memo-inp::placeholder { color: #555; }
+body.dark .btn-ghost  { background: #3b3a39; color: var(--text); border-color: #484644; }
+body.dark .btn-ghost:hover { background: #484644; }
+body.dark .btn-outline{ background: transparent; color: #6cb8f6; border-color: #6cb8f6; }
+body.dark .btn-outline:hover { background: #003a6c; }
+body.dark .warn { background: #3a2800; border-color: #7a5200; color: #ffd966; }
+body.dark .cal-popup { background: #2d2c2b; }
+body.dark .cal-day.other-month { color: #555; }
+body.dark .cal-day.other-month:hover { background: #3b3a39; color: #888; }
+body.dark .cal-day.saturday { color: #6cb8f6; }
+body.dark .cal-day.sunday   { color: #ff8f8f; }
+body.dark .swatch.sel { border-color: #f3f2f1; }
+body.dark .recur-opts > div { background: #252423 !important; }
+body.dark .info-card { background: #003a6c; }
+body.dark .drag-ghost { background: rgba(0,120,212,.25); }
+
 @media print {
   .header, .modal, .backdrop, .toasts { display:none !important; }
   body { height:auto; overflow:visible; }
@@ -393,7 +450,32 @@ textarea.fc { resize:vertical; }
   .lbl-col { position:relative; }
   * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+  :root { --lbl-w: 96px; --slot-w: 60px; --row-h: 52px; }
+  .hdr-title { display: none; }
+  .hdr-logo  { display: none; }
+  .hdr-sep   { display: none; }
+  .cat-legend { max-width: 38vw; overflow: hidden; }
+  .cat-badge span { display: none; } /* アイコンのみ */
+  .today-btn { padding: 4px 7px; font-size: 11px; }
+  .view-btn  { padding: 3px 8px; font-size: 11px; }
+  .hdr-btn   { padding: 4px 7px; font-size: 12px; }
+  .modal { width: 98vw; max-width: 98vw; margin: 4px; border-radius: 6px; }
+  .modal-body { padding: 12px 14px; }
+  .modal-foot { padding: 10px 14px; }
+  .frow { flex-direction: column; gap: 0; }
+  .frow .fg { flex: unset; width: 100%; }
+  .nav-btn { width: 32px; height: 32px; }
+}
+@media (max-width: 400px) {
+  :root { --lbl-w: 76px; --slot-w: 50px; }
+  .hdr-btn span { display: none; } /* テキスト非表示 */
+}
 </style>
+<!-- Firebase (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -429,6 +511,8 @@ textarea.fc { resize:vertical; }
   <div class="spacer"></div>
   <div class="cat-legend" id="cat-legend"></div>
   <div class="hdr-sep"></div>
+  <span id="sync-badge" title="同期状態" style="font-size:11px;opacity:.7;display:none"></span>
+  <button class="hdr-btn" id="dark-btn" onclick="toggleDark()" title="ダークモード切替">🌙</button>
   <button class="hdr-btn" onclick="exportCSV()" title="CSVダウンロード">⬇ CSV</button>
   <button class="hdr-btn" onclick="window.print()" title="印刷">🖨 印刷</button>
   <button class="hdr-btn" onclick="openAdmin()">⚙ 管理</button>
@@ -589,6 +673,7 @@ textarea.fc { resize:vertical; }
             <div class="fg" style="flex:2"><label>カテゴリ</label><select class="fc" id="new-res-cat"></select></div>
             <div class="fg" style="flex:1"><label>定員</label><input class="fc" id="new-res-cap" type="number" placeholder="人数" min="1"></div>
           </div>
+          <div class="fg"><label>備考メモ（任意）</label><textarea class="fc" id="new-res-memo" rows="2" placeholder="場所・利用上の注意など"></textarea></div>
           <button class="btn btn-primary btn-sm" onclick="addRes()">＋ 追加</button>
         </div>
       </div>
@@ -676,31 +761,117 @@ const DEFAULT = {
 };
 
 // ===== STATE =====
-let S = loadState();
+const S = (function() {
+  const s = JSON.parse(JSON.stringify(DEFAULT));
+  s.currentDate = new Date().toISOString().split('T')[0];
+  s.viewMode = 'day';
+  s.filterCats = [];
+  return s;
+})();
 let drag = null;
 let editId = null;
 let editResId = null;
 let editDate = null;
 let pickedColor = '';   // '' = use category color
 
-// ===== PERSISTENCE =====
-function loadState() {
-  try {
-    const raw = localStorage.getItem('yoyaku_v3');
-    if (raw) {
-      const s = JSON.parse(raw);
-      if (!s.viewMode) s.viewMode = 'day';
-      if (!s.filterCats) s.filterCats = [];
-      s.currentDate = today();
-      return s;
-    }
-  } catch(e){}
-  const s = JSON.parse(JSON.stringify(DEFAULT));
-  s.currentDate = today();
-  return s;
+// ===== FIREBASE =====
+const firebaseConfig = {
+  apiKey: "AIzaSyC0v5Q_xtczVdFrLYc_gy8fvAYz2Rgyd44",
+  authDomain: "meeting-room-booking-9edcd.firebaseapp.com",
+  projectId: "meeting-room-booking-9edcd",
+  storageBucket: "meeting-room-booking-9edcd.firebasestorage.app",
+  messagingSenderId: "241911423908",
+  appId: "1:241911423908:web:c2205d7171d71615c6d731"
+};
+let db = null;
+
+function setSyncBadge(text, color) {
+  const el = document.getElementById('sync-badge');
+  if (!el) return;
+  el.textContent = text; el.style.display = text ? '' : 'none'; el.style.color = color || 'rgba(255,255,255,.8)';
 }
+
+async function initFirebase() {
+  try {
+    const app = firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    setSyncBadge('接続中…', 'rgba(255,255,255,.6)');
+
+    // --- Config (resources / categories / catColors) ---
+    const cfgRef = db.doc('yoyaku_config/main');
+    const cfgSnap = await cfgRef.get();
+    if (cfgSnap.exists) {
+      const d = cfgSnap.data();
+      S.resources  = d.resources  || DEFAULT.resources;
+      S.categories = d.categories || DEFAULT.categories;
+      S.catColors  = d.catColors  || DEFAULT.catColors;
+    } else {
+      await cfgRef.set({ resources: S.resources, categories: S.categories, catColors: S.catColors });
+    }
+
+    // --- Reservations (real-time) ---
+    db.collection('yoyaku_reservations').onSnapshot(snap => {
+      S.reservations = snap.docs.map(d => d.data());
+      render();
+    }, err => { setSyncBadge('⚠ 同期エラー', '#ff9b9b'); console.error(err); });
+
+    // --- Config real-time ---
+    cfgRef.onSnapshot(snap => {
+      if (!snap.exists) return;
+      const d = snap.data();
+      S.resources  = d.resources  || S.resources;
+      S.categories = d.categories || S.categories;
+      S.catColors  = d.catColors  || S.catColors;
+      render();
+    });
+
+    setSyncBadge('● 同期中', '#90ee90');
+  } catch(e) {
+    setSyncBadge('⚠ オフライン', '#ff9b9b');
+    console.error('Firebase init error:', e);
+    // Fallback to localStorage
+    try {
+      const raw = localStorage.getItem('yoyaku_v3');
+      if (raw) {
+        const s = JSON.parse(raw);
+        S.resources    = s.resources    || S.resources;
+        S.categories   = s.categories   || S.categories;
+        S.catColors    = s.catColors    || S.catColors;
+        S.reservations = s.reservations || [];
+      }
+    } catch(_) {}
+    render();
+  }
+}
+
+// Save config (resources / categories / catColors) to Firestore
 function save() {
-  try { localStorage.setItem('yoyaku_v3', JSON.stringify(S)); } catch(e){}
+  if (!db) {
+    try { localStorage.setItem('yoyaku_v3', JSON.stringify(S)); } catch(_) {}
+    return;
+  }
+  db.doc('yoyaku_config/main').set({
+    resources: S.resources, categories: S.categories, catColors: S.catColors
+  }).catch(e => { setSyncBadge('⚠ 保存エラー','#ff9b9b'); console.error(e); });
+}
+
+// Write/delete a single reservation document
+function fbSetResv(rv) {
+  if (!db) return;
+  db.collection('yoyaku_reservations').doc(rv.id).set(rv)
+    .catch(e => { setSyncBadge('⚠ 保存エラー','#ff9b9b'); console.error(e); });
+}
+function fbDelResv(id) {
+  if (!db) return;
+  db.collection('yoyaku_reservations').doc(id).delete()
+    .catch(e => { setSyncBadge('⚠ 保存エラー','#ff9b9b'); console.error(e); });
+}
+async function fbDelAllResv() {
+  if (!db) return;
+  const snap = await db.collection('yoyaku_reservations').get();
+  const batch = db.batch();
+  snap.docs.forEach(d => batch.delete(d.ref));
+  await batch.commit();
 }
 function today() { return new Date().toISOString().split('T')[0]; }
 
@@ -852,9 +1023,12 @@ function renderDayGrid() {
     res.forEach(resource => {
       const rResvs = todayRes.filter(rv => rv.resourceId === resource.id);
 
-      lbls += `<div class="res-lbl" style="border-left-color:${cc}">
-        <div class="res-lbl-name" title="${escHtml(resource.name)}">${escHtml(resource.name)}</div>
-        ${resource.capacity ? `<div class="res-lbl-cap">👥${resource.capacity}</div>` : ''}
+      lbls += `<div class="res-lbl" style="border-left-color:${cc};flex-direction:column;align-items:flex-start;justify-content:center;gap:1px">
+        <div style="display:flex;align-items:center;gap:5px;width:100%">
+          <div class="res-lbl-name" title="${escHtml(resource.name)}">${escHtml(resource.name)}</div>
+          ${resource.capacity ? `<div class="res-lbl-cap">👥${resource.capacity}</div>` : ''}
+        </div>
+        ${resource.memo ? `<div class="res-lbl-memo" title="${escHtml(resource.memo)}">${escHtml(resource.memo.split('\n')[0])}</div>` : ''}
       </div>`;
 
       let resvHtml = '';
@@ -872,7 +1046,8 @@ function renderDayGrid() {
       });
 
       rows += `<div class="res-row" data-rid="${resource.id}" style="width:${totalW}px"
-        onmousedown="dragStart(event,'${resource.id}')">
+        onmousedown="dragStart(event,'${resource.id}')"
+        ontouchstart="touchDragStart(event,'${resource.id}')">
         ${slotBgHtml(ROW_H)}
         ${resvHtml}
         <div class="drag-ghost" id="gh-${resource.id}">
@@ -969,9 +1144,12 @@ function renderWeekView() {
     </div>`;
 
     res.forEach(resource => {
-      lbls += `<div class="res-lbl" style="border-left-color:${cc}">
-        <div class="res-lbl-name" title="${escHtml(resource.name)}">${escHtml(resource.name)}</div>
-        ${resource.capacity ? `<div class="res-lbl-cap">👥${resource.capacity}</div>` : ''}
+      lbls += `<div class="res-lbl" style="border-left-color:${cc};flex-direction:column;align-items:flex-start;justify-content:center;gap:1px">
+        <div style="display:flex;align-items:center;gap:5px;width:100%">
+          <div class="res-lbl-name" title="${escHtml(resource.name)}">${escHtml(resource.name)}</div>
+          ${resource.capacity ? `<div class="res-lbl-cap">👥${resource.capacity}</div>` : ''}
+        </div>
+        ${resource.memo ? `<div class="res-lbl-memo" title="${escHtml(resource.memo)}">${escHtml(resource.memo.split('\n')[0])}</div>` : ''}
       </div>`;
 
       const cells = dates.map(d => {
@@ -1174,6 +1352,41 @@ function onDragUp(e) {
 function cleanupDrag() {
   document.removeEventListener('mousemove', onDragMove);
   document.removeEventListener('mouseup',  onDragUp);
+  document.removeEventListener('touchmove', onTouchDragMove);
+  document.removeEventListener('touchend',  onTouchDragUp);
+}
+
+// ===== TOUCH DRAG =====
+function getSlotFromClientX(clientX, rowEl) {
+  const rect = rowEl.getBoundingClientRect();
+  return Math.max(0, Math.min(SLOTS - 1, Math.floor((clientX - rect.left) / SLOT_W)));
+}
+function touchDragStart(e, rid) {
+  if (e.target.closest('.resv')) return;
+  const touch = e.touches[0];
+  const rowEl = e.currentTarget;
+  const slot  = getSlotFromClientX(touch.clientX, rowEl);
+  drag = { rid, start: slot, end: slot + 1, rowEl };
+  showGhost(rid, slot, slot + 1);
+  document.addEventListener('touchmove', onTouchDragMove, { passive: false });
+  document.addEventListener('touchend',  onTouchDragUp);
+}
+function onTouchDragMove(e) {
+  if (!drag) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  const slot = getSlotFromClientX(touch.clientX, drag.rowEl);
+  drag.end = Math.max(drag.start + 1, slot + 1);
+  showGhost(drag.rid, drag.start, drag.end);
+}
+function onTouchDragUp(e) {
+  if (!drag) { cleanupDrag(); return; }
+  const t = e.changedTouches[0];
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  if (el && el.closest('.resv')) { cancelDrag(); return; }
+  const { rid, start, end } = drag;
+  drag = null; hideGhosts(); cleanupDrag();
+  openNew(rid, start, end);
 }
 
 function showGhost(rid, s, e2) {
@@ -1240,6 +1453,11 @@ function infoCardHtml(resource, date) {
       <span class="info-lbl" style="color:${cc}">📅</span>
       <span>${formatDate(date)}</span>
     </div>
+    ${resource.memo ? `
+    <div class="info-row">
+      <span class="info-lbl">📝</span>
+      <span style="font-size:12px;color:var(--muted);white-space:pre-line">${escHtml(resource.memo)}</span>
+    </div>` : ''}
   `;
 }
 
@@ -1381,7 +1599,10 @@ function saveResv() {
 
   if (editId) {
     const idx = S.reservations.findIndex(r => r.id === editId);
-    if (idx >= 0) S.reservations[idx] = { ...S.reservations[idx], title, person, startSlot:start, endSlot:end, notes, color:pickedColor };
+    if (idx >= 0) {
+      S.reservations[idx] = { ...S.reservations[idx], title, person, startSlot:start, endSlot:end, notes, color:pickedColor };
+      fbSetResv(S.reservations[idx]);
+    }
     toast('予約を更新しました', 'ok');
   } else {
     const isRecur = document.getElementById('f-recur').checked;
@@ -1394,11 +1615,15 @@ function saveResv() {
       if (dates.length === 0) { toast('有効な繰り返し日がありません', 'err'); return; }
       const rId = uid();
       dates.forEach(d => {
-        S.reservations.push({ id:uid(), resourceId:editResId, date:d, title, person, startSlot:start, endSlot:end, notes, color:pickedColor, recurId:rId, recurType:type });
+        const rv = { id:uid(), resourceId:editResId, date:d, title, person, startSlot:start, endSlot:end, notes, color:pickedColor, recurId:rId, recurType:type };
+        S.reservations.push(rv);
+        fbSetResv(rv);
       });
       toast(`繰り返し予約 ${dates.length}件を登録しました`, 'ok');
     } else {
-      S.reservations.push({ id:uid(), resourceId:editResId, date, title, person, startSlot:start, endSlot:end, notes, color:pickedColor });
+      const rv = { id:uid(), resourceId:editResId, date, title, person, startSlot:start, endSlot:end, notes, color:pickedColor };
+      S.reservations.push(rv);
+      fbSetResv(rv);
       toast('予約を登録しました', 'ok');
     }
   }
@@ -1409,6 +1634,7 @@ function saveResv() {
 function deleteResv() {
   if (!editId) return;
   if (!confirm('この予約を削除しますか？')) return;
+  fbDelResv(editId);
   S.reservations = S.reservations.filter(r => r.id !== editId);
   toast('予約を削除しました');
   closeResv();
@@ -1418,10 +1644,11 @@ function deleteAllRecur() {
   if (!editId) return;
   const rv = S.reservations.find(r => r.id === editId);
   if (!rv || !rv.recurId) return;
-  const count = S.reservations.filter(r => r.recurId === rv.recurId).length;
-  if (!confirm(`繰り返し予約シリーズ（${count}件）をすべて削除しますか？`)) return;
+  const toDelete = S.reservations.filter(r => r.recurId === rv.recurId);
+  if (!confirm(`繰り返し予約シリーズ（${toDelete.length}件）をすべて削除しますか？`)) return;
+  toDelete.forEach(r => fbDelResv(r.id));
   S.reservations = S.reservations.filter(r => r.recurId !== rv.recurId);
-  toast(`繰り返し予約 ${count}件を削除しました`);
+  toast(`繰り返し予約 ${toDelete.length}件を削除しました`);
   closeResv();
   render();
 }
@@ -1532,9 +1759,36 @@ function resDragEnd(e) {
     el.classList.remove('dragging','drag-over-top','drag-over-bottom'));
 }
 
+let _editingResId = null;
+
 function renderAdmin() {
   const resList = document.getElementById('adm-res-list');
-  resList.innerHTML = S.resources.map((r, i) => `
+  resList.innerHTML = S.resources.map((r, i) => {
+    const isEditing = r.id === _editingResId;
+    const catOpts = S.categories.map(c =>
+      `<option value="${escHtml(c)}" ${c===r.category?'selected':''}>${escHtml(c)}</option>`
+    ).join('');
+
+    if (isEditing) {
+      return `
+      <div class="adm-item editing" data-rid="${r.id}">
+        <span style="color:#ccc;font-size:15px;flex-shrink:0">⠿</span>
+        <input class="adm-edit-inp" id="ei-name" style="flex:2" value="${escHtml(r.name)}" placeholder="名前"
+          ondragstart="event.stopPropagation()" onkeydown="if(event.key==='Enter')confirmEditRes('${r.id}');if(event.key==='Escape')cancelEditRes()">
+        <select class="adm-edit-inp" id="ei-cat" style="flex:1.5">${catOpts}</select>
+        <input class="adm-edit-inp" id="ei-cap" type="number" style="width:70px" value="${r.capacity||''}" placeholder="定員"
+          ondragstart="event.stopPropagation()">
+        <button class="btn btn-primary btn-sm" onclick="confirmEditRes('${r.id}')">✓ 保存</button>
+        <button class="btn btn-ghost btn-sm" onclick="cancelEditRes()">✗</button>
+        <div class="adm-memo-row">
+          <span class="adm-memo-lbl">メモ</span>
+          <textarea class="adm-memo-inp" id="ei-memo" placeholder="場所・利用上の注意など"
+            ondragstart="event.stopPropagation()">${escHtml(r.memo||'')}</textarea>
+        </div>
+      </div>`;
+    }
+
+    return `
     <div class="adm-item" draggable="true" data-rid="${r.id}"
       ondragstart="resDragStart(event,'${r.id}')"
       ondragover="resDragOver(event,'${r.id}')"
@@ -1546,11 +1800,18 @@ function renderAdmin() {
       <div class="adm-name" title="${escHtml(r.name)}">${escHtml(r.name)}</div>
       ${r.capacity ? `<span style="font-size:11px;color:#888">👥${r.capacity}</span>` : ''}
       <div class="adm-tag">${escHtml(r.category)}</div>
+      <button class="adm-edit" onclick="startEditRes('${r.id}')" title="編集">✏</button>
       <button class="adm-move" onclick="moveRes('${r.id}',-1)" ${i===0?'disabled':''}>↑</button>
       <button class="adm-move" onclick="moveRes('${r.id}',1)" ${i===S.resources.length-1?'disabled':''}>↓</button>
       <button class="adm-del" onclick="delRes('${r.id}')">削除</button>
-    </div>`
-  ).join('') || '<div style="color:var(--muted);font-size:13px;padding:6px 0">リソースがありません</div>';
+      <div class="adm-memo-row">
+        <span class="adm-memo-lbl">メモ</span>
+        <textarea class="adm-memo-inp" placeholder="場所・利用上の注意など"
+          ondragstart="event.stopPropagation()"
+          onblur="saveResMemo('${r.id}', this.value)">${escHtml(r.memo||'')}</textarea>
+      </div>
+    </div>`;
+  }).join('') || '<div style="color:var(--muted);font-size:13px;padding:6px 0">リソースがありません</div>';
 
   const sel = document.getElementById('new-res-cat');
   sel.innerHTML = S.categories.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
@@ -1565,14 +1826,54 @@ function renderAdmin() {
   ).join('');
 }
 
+// ===== RESOURCE INLINE EDIT =====
+function startEditRes(id) {
+  _editingResId = id;
+  renderAdmin();
+  // Auto-focus name field
+  setTimeout(() => { const el = document.getElementById('ei-name'); if (el) el.focus(); }, 30);
+}
+function cancelEditRes() {
+  _editingResId = null;
+  renderAdmin();
+}
+function confirmEditRes(id) {
+  const r = S.resources.find(x => x.id === id);
+  if (!r) return;
+  const name = (document.getElementById('ei-name').value || '').trim();
+  const cat  = document.getElementById('ei-cat').value;
+  const cap  = document.getElementById('ei-cap').value;
+  const memo = (document.getElementById('ei-memo').value || '').trim();
+  if (!name) { toast('名前を入力してください', 'err'); document.getElementById('ei-name').focus(); return; }
+  r.name     = name;
+  r.category = cat;
+  r.capacity = cap ? parseInt(cap) : null;
+  r.memo     = memo;
+  _editingResId = null;
+  save();
+  renderAdmin();
+  render();
+  toast(`「${name}」を更新しました`, 'ok');
+}
+
+function saveResMemo(id, val) {
+  const r = S.resources.find(x => x.id === id);
+  if (!r) return;
+  r.memo = val.trim();
+  save();
+  render(); // update row labels immediately
+}
+
 function addRes() {
   const name = document.getElementById('new-res-name').value.trim();
   const cat  = document.getElementById('new-res-cat').value;
   const cap  = document.getElementById('new-res-cap').value;
+  const memo = document.getElementById('new-res-memo').value.trim();
   if (!name) { toast('リソース名を入力してください', 'err'); return; }
-  S.resources.push({ id:uid(), name, category:cat, capacity:cap?parseInt(cap):null });
+  S.resources.push({ id:uid(), name, category:cat, capacity:cap?parseInt(cap):null, memo:memo||'' });
   document.getElementById('new-res-name').value = '';
   document.getElementById('new-res-cap').value  = '';
+  document.getElementById('new-res-memo').value = '';
   toast(`「${name}」を追加しました`, 'ok');
   renderAdmin();
 }
@@ -1608,8 +1909,9 @@ function delCat(cat) {
   renderAdmin();
 }
 
-function clearAll() {
+async function clearAll() {
   if (!confirm('全ての予約データを削除しますか？\nこの操作は元に戻せません。')) return;
+  await fbDelAllResv().catch(e => console.error(e));
   S.reservations = [];
   toast('全予約を削除しました');
   closeAdmin();
@@ -1683,8 +1985,24 @@ setInterval(() => {
   }
 }, 30000);
 
+// ===== DARK MODE =====
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('yoyaku_dark', isDark ? '1' : '0');
+  const btn = document.getElementById('dark-btn');
+  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+}
+(function applyDark() {
+  if (localStorage.getItem('yoyaku_dark') === '1') {
+    document.body.classList.add('dark');
+    const btn = document.getElementById('dark-btn');
+    if (btn) btn.textContent = '☀️';
+  }
+})();
+
 // ===== INIT =====
-render();
+S.currentDate = today();
+initFirebase().then(() => render());
 </script>
 </body>
 </html>
