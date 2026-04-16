@@ -275,6 +275,14 @@ textarea.fc { resize:vertical; }
 .adm-tag { font-size:10px; color:var(--muted); background:var(--bg); padding:2px 6px; border-radius:10px; }
 .adm-del { background:#fde7e9; color:#d13438; border:none; border-radius:3px; padding:2px 8px; cursor:pointer; font-size:11px; font-family:inherit; font-weight:600; transition:background .1s; }
 .adm-del:hover { background:#f9d3d5; }
+.adm-move { background:#f3f2f1; color:var(--muted); border:1px solid var(--border2); border-radius:3px; padding:1px 6px; cursor:pointer; font-size:13px; font-family:inherit; line-height:1.4; transition:background .1s; flex-shrink:0; }
+.adm-move:hover:not(:disabled) { background:var(--primary-lt); color:var(--primary); border-color:var(--primary); }
+.adm-move:disabled { opacity:.25; cursor:default; }
+/* Drag-and-drop */
+.adm-item[draggable] { cursor:grab; }
+.adm-item.drag-over-top    { border-top:2px solid var(--primary); }
+.adm-item.drag-over-bottom { border-bottom:2px solid var(--primary); }
+.adm-item.dragging { opacity:.35; }
 .add-box { background:#f9f8f7; padding:12px; border-radius:6px; border:1px solid var(--border); margin-top:12px; }
 .add-box-ttl { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:10px; }
 
@@ -1472,13 +1480,74 @@ function changeAdminPw() {
   setTimeout(() => { msg.textContent = ''; }, 3000);
 }
 
+// ===== RESOURCE REORDERING =====
+function moveRes(id, dir) {
+  const idx = S.resources.findIndex(r => r.id === id);
+  const to  = idx + dir;
+  if (to < 0 || to >= S.resources.length) return;
+  const [item] = S.resources.splice(idx, 1);
+  S.resources.splice(to, 0, item);
+  save();
+  renderAdmin();
+}
+
+let _dragRid = null;
+function resDragStart(e, id) {
+  _dragRid = id;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function resDragOver(e, id) {
+  if (!_dragRid || _dragRid === id) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const el   = e.currentTarget;
+  const mid  = el.getBoundingClientRect().top + el.offsetHeight / 2;
+  el.classList.toggle('drag-over-top',    e.clientY < mid);
+  el.classList.toggle('drag-over-bottom', e.clientY >= mid);
+}
+function resDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over-top','drag-over-bottom');
+}
+function resDrop(e, id) {
+  e.preventDefault();
+  resDragLeave(e);
+  if (!_dragRid || _dragRid === id) return;
+  const fromIdx = S.resources.findIndex(r => r.id === _dragRid);
+  const toIdx   = S.resources.findIndex(r => r.id === id);
+  if (fromIdx < 0 || toIdx < 0) return;
+  // Determine insert position (before or after target)
+  const el  = e.currentTarget;
+  const mid = el.getBoundingClientRect().top + el.offsetHeight / 2;
+  const insertAfter = e.clientY >= mid;
+  const [item] = S.resources.splice(fromIdx, 1);
+  const adjustedTo = S.resources.findIndex(r => r.id === id);
+  S.resources.splice(insertAfter ? adjustedTo + 1 : adjustedTo, 0, item);
+  save();
+  renderAdmin();
+}
+function resDragEnd(e) {
+  _dragRid = null;
+  document.querySelectorAll('.adm-item').forEach(el =>
+    el.classList.remove('dragging','drag-over-top','drag-over-bottom'));
+}
+
 function renderAdmin() {
-  document.getElementById('adm-res-list').innerHTML = S.resources.map(r => `
-    <div class="adm-item">
+  const resList = document.getElementById('adm-res-list');
+  resList.innerHTML = S.resources.map((r, i) => `
+    <div class="adm-item" draggable="true" data-rid="${r.id}"
+      ondragstart="resDragStart(event,'${r.id}')"
+      ondragover="resDragOver(event,'${r.id}')"
+      ondragleave="resDragLeave(event)"
+      ondrop="resDrop(event,'${r.id}')"
+      ondragend="resDragEnd(event)">
+      <span style="color:#bbb;font-size:15px;cursor:grab;flex-shrink:0" title="ドラッグで並び替え">⠿</span>
       <div class="adm-chip" style="background:${catColor(r.category)}"></div>
       <div class="adm-name" title="${escHtml(r.name)}">${escHtml(r.name)}</div>
       ${r.capacity ? `<span style="font-size:11px;color:#888">👥${r.capacity}</span>` : ''}
       <div class="adm-tag">${escHtml(r.category)}</div>
+      <button class="adm-move" onclick="moveRes('${r.id}',-1)" ${i===0?'disabled':''}>↑</button>
+      <button class="adm-move" onclick="moveRes('${r.id}',1)" ${i===S.resources.length-1?'disabled':''}>↓</button>
       <button class="adm-del" onclick="delRes('${r.id}')">削除</button>
     </div>`
   ).join('') || '<div style="color:var(--muted);font-size:13px;padding:6px 0">リソースがありません</div>';
